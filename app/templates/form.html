@@ -1,0 +1,35 @@
+<form class="m-5" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        <fieldset id="email-field">
+            {{ form.email.label }}
+            {{ form.email(class = 'form-control', placeholder = 'Please enter valid email') }}
+        </fieldset>
+       <!-- <p>{{ request.path == "/signup" }}</p> -->
+    </div>
+
+    {% if request.path == "/signup" %}
+
+    <div class="form-group">
+        <fieldset id="name-field">
+            {{ form.first_name.label }}
+            {{ form.email(class = 'form-control', placeholder = 'Please enter first name') }}
+        </fieldset>
+    </div>
+    <div class="form-group">
+        <fieldset id="name-field">
+            {{ form.last_name.label }}
+            {{ form.last_name(class = 'form-control', placeholder = 'Please enter last name') }}
+        </fieldset>
+    </div>
+
+    {% endif %}
+
+        <fieldset id="pass-field">
+            {{ form.password.label }}
+            {{ form.password(class = "form-control", placeholder = "Please enter password") }}
+        </fieldset>
+
+        <!-- Submit button area -->
+        {{ form.submit_button(class = "btn btn-two_nd btn-outline-one_st btn-block mt-2")}}
+</form>

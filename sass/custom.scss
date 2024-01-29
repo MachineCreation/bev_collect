@@ -1,0 +1,23 @@
+// import funtions & variables
+
+@import "../node_modules/bootstrap/scss/_functions";
+@import "../node_modules/bootstrap/scss/_variables";
+
+// custom theme color scheme
+
+//$one_st:            rgb(97, 1, 161) !default;
+//$two_nd:            rgb(49, 231, 255) !default;
+//$three_rd:          rgb(255, 230, 0) !default;
+
+$custom_site_pallet: (
+    "one_st":       rgb(97, 1, 161),
+    "two_nd":       rgb(49, 231, 255),
+    "three_rd":     rgb(255, 230, 0),
+    "four_th":      rgb(214, 214, 204)
+);
+
+$theme-colors: map-merge($custom_site_pallet, $theme-colors);
+
+
+// import bootstrap standard confiuration
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
