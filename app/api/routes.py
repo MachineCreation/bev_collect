@@ -1,73 +1,74 @@
 from flask import Blueprint, request, jsonify, render_template
 from helpers import token_required
-from models import db, User, Car, car_schema, cars_schema
+from models import db, User, Beverage, beverage_schema, beverages_schema
 
 api = Blueprint('api',__name__, url_prefix='/api')
 
 
                                                                                 #post contact test route
 
-@api.route('/new_car', methods = ['POST'])
+@api.route('/new_beverage', methods = ['POST'])
 @token_required
-def new_car(current_user_token):
-    make = request.json['make']
-    model = request.json['model']
-    year = request.json['year']
-    mileage = request.json['mileage']
-    when_purchased = request.json['when_purchased']
+def new_beverage(current_user_token):
+    base_liquor = request.json['base_liquor']
+    name = request.json['name']
+    glass_type = request.json['glass_type']
+    recipe = request.json['recipe']
+    comments = request.json['comments']
 
     print(f'BIG TESTER: {current_user_token.token}')
 
-    car = Car(make, model, year, mileage,when_purchased, user_token = current_user_token.token)
+    beverage = Beverage(base_liquor, name, glass_type, recipe,comments, user_token = current_user_token.token)
 
-    db.session.add(car)
+    db.session.add(beverage)
     db.session.commit()
 
-    response = car_schema.dump(car)
+    response = beverage_schema.dump(beverage)
     return jsonify(response)
 
                                                                                 #retrieve all contacts route
 
-@api.route('/cars', methods = ['GET'])
+@api.route('/beverages', methods = ['GET'])
 @token_required
-def list_all_cars(current_user_token):
+def list_all_beverages(current_user_token):
     a_user = current_user_token.token
-    cars = Car.query.filter_by(user_token = a_user).all()
-    response = cars_schema.dump(cars)
+    beverages = Beverage.query.filter_by(user_token = a_user).all()
+    response = beverages_schema.dump(beverages)
     return jsonify(response)
 
                                                                                 #retrieve single contact route by id
 
-@api.route('/cars/<id>', methods = ['GET'])
+@api.route('/beverages/<id>', methods = ['GET'])
 @token_required
-def get_single_car(current_user_token,id):
-    car = car.query.get(id) 
-    response = car_schema.dump(car)
+def get_single_beverage(current_user_token,id):
+    beverage = Beverage.query.get(id) 
+    response = beverage_schema.dump(beverage)
     return response
 
                                                                                 # update single contact by id
 
-@api.route('/cars/<id>', methods = ['POST','PUT'])
+@api.route('/beverages/<id>', methods = ['POST','PUT'])
 @token_required
-def update_car_info(current_user_token,id):
-    car = car.query.get(id) 
-    car.make = request.json['make']
-    car.model = request.json['model']
-    car.year = request.json['year']
-    car.mileage = request.json['mileage']
-    car.user_token = current_user_token.token
+def update_beverage_info(current_user_token,id):
+    beverage = Beverage.query.get(id) 
+    beverage.base_liquor = request.json['base_liquor']
+    beverage.name = request.json['name']
+    beverage.glass_type = request.json['glass_type']
+    beverage.recipe = request.json['recipe']
+    beverage.comments = request.json['comments']
+    beverage.user_token = current_user_token.token
 
     db.session.commit()
-    response = car_schema.dump(car)
+    response = beverage_schema.dump(beverage)
     return jsonify(response)
 
                                                                                 # delete single contact by id
 
-@api.route('/cars/<id>', methods = ['DELETE'])
+@api.route('/beverages/<id>', methods = ['DELETE'])
 @token_required
-def delete_car(current_user_token, id):
-    car = Car.query.get(id)
-    db.session.delete(car)
+def delete_beverage(current_user_token, id):
+    beverage = Beverage.query.get(id)
+    db.session.delete(beverage)
     db.session.commit()
-    response = car_schema.dump(car)
+    response = beverage_schema.dump(beverage)
     return jsonify(response)

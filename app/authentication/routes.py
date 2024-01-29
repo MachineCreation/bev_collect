@@ -18,10 +18,11 @@ def signup():
             email = form.email.data
             password = form.password.data
             first_name = form.first_name.data.title()
-            last_name = form.lsat_name.data.title()
+            last_name = form.last_name.data.title()
+            favorite_liquor = form.favorite_liquor.data
             print(email, first_name, last_name, password)
 
-            user = User(email, first_name, last_name, password = password)
+            user = User(email, first_name, last_name, favorite_liquor, password = password)
 
             db.session.add(user)
             db.session.commit()
