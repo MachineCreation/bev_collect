@@ -83,9 +83,9 @@ class Beverage(db.Model):
     
                                                                                 # not quite sure what this is for yet. I'm not familear with Marshmallow
 
-class CarSchema(ma.Schema):
+class beverageSchema(ma.Schema):
     class Meta:
         fields = ['id', 'base_liquor','name','glass_type', 'recipe','comments']
 
-beverage_schema = CarSchema()
-beverages_schema = CarSchema(many=True)
+beverage_schema = beverageSchema()
+beverages_schema = beverageSchema(many=True)
